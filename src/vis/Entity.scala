@@ -1,11 +1,9 @@
-
-
 package vis
 
-class Entity {
+case class Entity (pos: Pos) {
   
 }
 
-class Wall extends Entity {
+/*class Wall extends Entity {
   
-}
+}*/
