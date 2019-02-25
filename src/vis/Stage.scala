@@ -12,7 +12,7 @@ class Stage {
   
   /**Get position in world from grid coordinates.*/
   def position(x: Int, y: Int) = Pos(Stage.SqWidth*x, Stage.SqWidth*y, 0)
-  def wallPosition(x: Int, y: Int, dir: Dir) = Pos(Stage.SqWidth*(x + 0.5*dir.xMul), Stage.SqWidth*(y + 0.5*dir.xMul), 0)
+  def wallPosition(x: Int, y: Int, dir: Dir) = Pos(Stage.SqWidth*(x + 0.5*dir.xMul), Stage.SqWidth*(y + 0.5*dir.yMul), 0)
   
   def getWall(x: Int, y: Int, dir: Dir) = dir match {
     case Dir.North => horWalls.get(x, y + 1)
