@@ -25,7 +25,7 @@ case class Entity(pos: Pos) {
 
 class Wall(p: Pos, dir: Dir) extends Entity(p) {
   this.rot = dir.rot
-  this.verticies += (Pos(-0.5,0,0), Pos(-0.5,0, Wall.Height), Pos(0.5,0,0), Pos(0.5,0, Wall.Height))
+  this.verticies += (Pos(-0.5,0,0), Pos(-0.5,0, Wall.Height), Pos(0.5,0, Wall.Height), Pos(0.5,0,0))
 }
 
 object Wall {
