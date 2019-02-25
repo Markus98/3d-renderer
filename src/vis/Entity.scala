@@ -7,8 +7,17 @@ case class Entity(pos: Pos) {
   var rot: Double = 0.0 // rotation in radians along z-axis
   val verticies = Buffer[Pos]() // Positions in relation to the entity's origin. The object's polygon is drawn in the same order as the buffer. 
   
+  private var previousRot = this.rot
+  private var rotatedPoints = verticies
+  
   /** Returns the verticies of the entity with the rotation applied.*/
-  def rotPositions = verticies.map(_.rotated(rot))
+  def rotPositions = {
+    if (rot != previousRot) {
+      rotatedPoints = verticies.map(_.rotated(rot))
+      previousRot = rot
+    }
+    rotatedPoints
+  }
 
   /** Vertex positions in global coordinate system*/
   def vertexPositions = rotPositions.map( p => Pos(p.x + pos.x, p.y + pos.y, p.z + pos.z) )
