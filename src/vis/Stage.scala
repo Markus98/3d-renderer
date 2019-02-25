@@ -6,9 +6,9 @@ import scala.math
 /** A stage is a two dimensional grid-based field that acts as an interface between simple grid coordinates and actual positional coordinates*/
 class Stage {
   /**The walls that are aligned with the y-axis.*/
-  val verWalls = Map[(Int, Int), Entity]()
+  private val verWalls = Map[(Int, Int), Entity]()
   /**The walls that are aligned with the x-axis.*/
-  val horWalls = Map[(Int, Int), Entity]()
+  private val horWalls = Map[(Int, Int), Entity]()
   
   /**Get position in world from grid coordinates.*/
   def position(x: Int, y: Int) = Pos(Stage.SqWidth*x, Stage.SqWidth*y, 0)
@@ -20,6 +20,8 @@ class Stage {
     case Dir.South => horWalls.get(x, y)
     case Dir.West  => verWalls.get(x, y)
   }
+  
+  def getWalls = (verWalls.values ++ horWalls.values).toVector
 
   def addWall(x: Int, y: Int, dir: Dir): Boolean = {
     if (this.getWall(x, y, dir).isEmpty) {
