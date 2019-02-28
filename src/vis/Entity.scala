@@ -3,9 +3,11 @@ package vis
 import scala.collection.mutable.Buffer
 import scala.math
 
-case class Entity(pos: Pos) {
-  var rot: Double = 0.0 // rotation in radians along z-axis
+case class Entity(pos: Pos, var rot: Double = 0.0) {
+  //rotation in radians along z-axis
+  
   val verticies = Buffer[Pos]() // Positions in relation to the entity's origin. The object's polygon is drawn in the same order as the buffer. 
+  
   
   private var previousRot = this.rot
   private var rotatedPoints = verticies
