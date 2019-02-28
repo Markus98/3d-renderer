@@ -9,8 +9,8 @@ case class Entity(pos: Pos, var rot: Double = 0.0) {
   val verticies = Buffer[Pos]() // Positions in relation to the entity's origin. The object's polygon is drawn in the same order as the buffer. 
   
   
-  private var previousRot = this.rot
-  private var rotatedPoints = verticies
+  private var previousRot = 0.0
+  private var rotatedPoints = this.verticies
   
   /** Returns the verticies of the entity with the rotation applied.*/
   def rotPositions = {
