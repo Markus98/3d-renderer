@@ -6,7 +6,6 @@ import scala.math
 /** A stage is a two dimensional grid-based field that acts as an interface between simple grid coordinates and actual positional coordinates*/
 class Stage {
   
-  val player = new Player()
   /**The walls that are aligned with the y-axis.*/
   private val verWalls = Map[(Int, Int), Entity]()
   /**The walls that are aligned with the x-axis.*/
