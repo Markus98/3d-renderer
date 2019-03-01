@@ -8,6 +8,8 @@ case class Pos(var x: Double, var y: Double, var z: Double) {
   def dist(p: Pos) = sqrt(pow(x - p.x, 2) + pow(y - p.y, 2) + pow(z - p.z, 2))
   /**The distance between two points in the xy-plane.*/
   def horDist(p: Pos) = sqrt(pow(x - p.x, 2) + pow(y - p.y, 2))
+  /**The distance from the origin.*/
+  def origDist = sqrt(x*x + y*y + z*z)
   /**The relative position of a position compared to this one.*/
   def relPos(p: Pos) = Pos(p.x - x, p.y - y, p.z - z)
   /**Rotates the point along the origin and the z-axis*/
