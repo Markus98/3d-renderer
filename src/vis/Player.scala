@@ -8,4 +8,5 @@ class Player {
 object Player {
   val Height = 1.0
   val MinView = 0.2
+  val PixelMultiplier = 2000.0
 }
