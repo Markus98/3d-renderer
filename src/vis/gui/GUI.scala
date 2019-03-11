@@ -11,7 +11,7 @@ import scala.math
 
 object GUI extends JFXApp {
   var game = new Game()
-  game.player.rot = 0
+  game.player.rot = 0.5
   game.player.pos.y = 4
   //game.stage.addWall(0, 0, Dir.East)
   

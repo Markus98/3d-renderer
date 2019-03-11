@@ -1,0 +1,22 @@
+-- ti 12.3 --
+Projektiin on lisätty luokat Entity, Wall, Game, Player, Pos, Stage ja GUI.
+Pos luokassa on toteutettu erilaisia metodeja, joiden avulla voidaan laskea relatiivisia sijainteja ja 
+pyörityksiä.
+Stage luokka on saatu sisältämään kaikki tason seinät ja palauttamaan niistä relevantteja tietoja. Stagella on oma 
+ruudukkokoordinaatistonsa.
+Entity luokka pitää lähinnä kirjaa esineen kulmista. Wall class on lähes samanlainen, mutta sillä on erilainen 
+konstruktioparameri ja valmiit kulmat.
+Player luokka lähinnä pitää sisällään vakioita tällä hetkellä.
+Game luokkaan on toteutettu metodi, joka luo Entityn, jolla on relatiivinen sijainti kameraan. Tätä käytetään 
+Asioiden piirtämisen helpoittamiseksi.
+GUI objektiin on tehty alustavia testejä asioiden 3d-projisointiin liittyen. Tällä hetkellä se osaa piirtää yhden 
+framen kun ohjelma avataan. UI toteutetaan ScalaFX kirjaston 2d-komponenteilla.
+
+Kaikki tähän mennessä implementoidut metodit kaikissa luokissa on testattu toimiviksi.
+
+Pikselien sijainnin laskemisen kanssa oli aluksi hieman ongelmia, mutta se osoittautui johtuvan vain 
+virheellisesti kirjoitetusta kaavasta ja relatiivisten sijantien laskun puutteesta.
+
+Projektiin on nyt käytetty noin 15h.
+
+Olen suunilleen aikataulussa projektisuunnitelmani kanssa.
