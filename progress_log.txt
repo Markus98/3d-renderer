@@ -20,3 +20,12 @@ virheellisesti kirjoitetusta kaavasta ja relatiivisten sijantien laskun puuttees
 Projektiin on nyt käytetty noin 15h.
 
 Olen suunilleen aikataulussa projektisuunnitelmani kanssa.
+
+-- ma 25.3 --
+Projektiin on tullut nyt lisää lähinnä sen, että GUI luokka osaa nyt *oikeasti* renderöidä asiat oikein. Viime 
+toteutuksella tuli pahojakin vaikeuksia, kun kappaleiden kulmat menivät clipping planen taakse. Nämä ilmenivät, kun 
+lisäsin ohjelmaan animaation, joka pyörittää kameraa jatkuvasti. Nyt ohjelma leikkaa esineet, jotka tulevat liian lähelle kameraa.
+Pääasiassa on siis muokattu metodia drawEntity.
+
+Käytin tällä aikavälillä noin 5 tuntia projektin tekemiseen.
+Olen vieläkin melko hyvin aikataulussa, sillä mielestäni projektin vaikein osuus on jo tehty.
