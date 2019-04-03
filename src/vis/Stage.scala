@@ -41,7 +41,25 @@ object Stage {
   val SqWidth: Double = 1 // The width of a single square.
 }
 
-sealed abstract class Dir (val xMul: Int, val yMul: Int, val rot: Double) 
+sealed abstract class Dir (val xMul: Int, val yMul: Int, val rot: Double) {
+  def clockwise: Dir = {
+    val index = Dir.Clockwise.indexOf(this) + 1
+    if (index < 4) {
+      Dir.Clockwise(index)
+    } else {
+      Dir.Clockwise.head
+    }
+  }
+  
+  def antiClockwise: Dir = {
+    val index = Dir.AntiClockwise.indexOf(this) + 1
+    if (index < 4) {
+      Dir.AntiClockwise(index)
+    } else {
+      Dir.AntiClockwise.head
+    }
+  }
+}
 
 object Dir {
   case object North extends Dir(0, 1, 0)
@@ -50,4 +68,5 @@ object Dir {
   case object West extends Dir(-1, 0, math.Pi * 0.5)
   
   val Clockwise = Vector[Dir](North, East, South, West)
+  val AntiClockwise = Clockwise.reverse
 }
