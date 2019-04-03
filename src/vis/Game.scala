@@ -3,8 +3,8 @@ package vis
 import scala.collection.mutable.Buffer
 
 class Game {
-  val player = new Player()
   val stage = new Stage()
+  val player = new Player(stage)
   val entities = Buffer[Entity]()
   
   /**Returns a new instance of a given entity whose position and rotation have been made
@@ -15,4 +15,10 @@ class Game {
     relEntity
   }
   
+  def gameTick(dt: Double) {
+    if (player.rotating)
+      player.rotateTowardsDesired(dt)
+    if (player.moving)
+      player.moveTowardsDesired(dt)
+  }
 }
