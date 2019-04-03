@@ -9,11 +9,13 @@ import scalafx.animation.AnimationTimer
 import scala.collection.mutable.Buffer
 import vis._
 import scala.math
+import scalafx.scene.input._
 
 object GUI extends JFXApp {
   var game = new Game()
   game.player.rot = 0
   game.player.pos.y = 0
+  game.player.pos.x = 0
   
   game.stage.addWall(0, 2, Dir.East)
   game.stage.addWall(0, 2, Dir.West)
@@ -48,19 +50,33 @@ object GUI extends JFXApp {
     scene = new Scene {
       fill = White
       
+      onKeyPressed = (e: KeyEvent) => {
+        if (!game.player.moving) {
+          if (e.code == KeyCode.UP) {
+            game.player.moveForward()
+          } else if (e.code == KeyCode.DOWN) {
+            game.player.moveBackward()
+          }
+          game.player.moving = true
+        }
+        if (!game.player.rotating) {
+          if (e.code == KeyCode.LEFT) {
+            game.player.turnLeft()
+          } else if (e.code == KeyCode.RIGHT) {
+            game.player.turnRight()
+          }
+          game.player.rotating = true
+        }
+      }
+      
       var prevTime: Long = 0
       val timer = AnimationTimer(t => {
         val deltaTime = (t - prevTime)/1000000000.0
         prevTime = t
-        
-        testRot(deltaTime)
+        game.gameTick(deltaTime)
         content = game.stage.getWalls.sortBy(game.getRelEntity(_).pos.origDist).reverse.map(drawEntity)
       })
       timer.start
-    }
-    
-    def testRot(x: Double) = {
-      game.player.rot += x
     }
     
     def drawEntity(ent: Entity): Polygon = {
