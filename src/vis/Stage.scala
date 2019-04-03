@@ -59,6 +59,8 @@ sealed abstract class Dir (val xMul: Int, val yMul: Int, val rot: Double) {
       Dir.AntiClockwise.head
     }
   }
+  
+  def opposite: Dir = this.clockwise.clockwise
 }
 
 object Dir {
