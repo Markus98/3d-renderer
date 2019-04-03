@@ -44,7 +44,6 @@ class Player(val stage: Stage) {
     } else if (rotArc < -math.Pi) {
       rotArc += 2*math.Pi
     }
-    //println(s"rotArc: ${rotArc/(2*math.Pi)},\t normRot: ${normRot/(2*math.Pi)},\t rotAmount: ${rotAmount/(2*math.Pi)},\t playerRot: ${rot/(2*math.Pi)}")
     if (rotAmount < math.abs(rotArc)) {
       if(rotArc < 0) {
         rot -= rotAmount
@@ -53,13 +52,29 @@ class Player(val stage: Stage) {
       }
     } else {
       rot = dir.rot
-      println(rot % (2*math.Pi))
       rotating = false
     }
   }
   
+  /**Moves a small amount towards desired location according to deltaTime*/
   def moveTowardsDesired(deltaTime: Double) = {
+    val dest = stage.position(gridX, gridY)
+    val xDist = pos.x - dest.x
+    val yDist = pos.y - dest.y
+    val moveDist = deltaTime * Player.MovementSpeed
     
+    if (moveDist < math.abs(xDist)) {
+      pos.x += moveDist * -math.signum(xDist)
+    }
+    if (moveDist < math.abs(yDist)) {
+      pos.y += moveDist * -math.signum(yDist)
+    }
+    
+    if (moveDist > math.abs(xDist) && moveDist > math.abs(yDist)) {
+      pos.x = dest.x
+      pos.y = dest.y
+      moving = false
+    }
   }
   
 }
@@ -68,6 +83,6 @@ object Player {
   val Height = 1.0
   val MinView = 0.25
   val PixelMultiplier = 1800
-  val MovementSpeed = 1.0
-  val TurningSpeed = 2.0
+  val MovementSpeed = 2.0  // m/s
+  val TurningSpeed = 3.0   // rad/s
 }
