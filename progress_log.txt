@@ -22,10 +22,18 @@ Projektiin on nyt käytetty noin 15h.
 Olen suunilleen aikataulussa projektisuunnitelmani kanssa.
 
 -- ma 25.3 --
-Projektiin on tullut nyt lisää lähinnä sen, että GUI luokka osaa nyt *oikeasti* renderöidä asiat oikein. Viime 
+Projektiin on tullut nyt lisää lähinnä se, että GUI luokka osaa nyt *oikeasti* renderöidä asiat oikein. Viime 
 toteutuksella tuli pahojakin vaikeuksia, kun kappaleiden kulmat menivät clipping planen taakse. Nämä ilmenivät, kun 
 lisäsin ohjelmaan animaation, joka pyörittää kameraa jatkuvasti. Nyt ohjelma leikkaa esineet, jotka tulevat liian lähelle kameraa.
 Pääasiassa on siis muokattu metodia drawEntity.
 
 Käytin tällä aikavälillä noin 5 tuntia projektin tekemiseen.
 Olen vieläkin melko hyvin aikataulussa, sillä mielestäni projektin vaikein osuus on jo tehty.
+
+-- ma 8.4 --
+Projektiin on tullut muutoksia Player, Dir, Game ja GUI luokkiin. Kaikista eniten on muokattu PLayer luokkaa, johon on sijoitettu liikkumisen 
+animaatioita käsitteleviä metodeja. GUI osaa nyt käsitellä keypressejä ja pelaaja pystyy liikkumaan gridikoordinaattien välillä nuolinäppäinten avulla.
+Pyörimisanimaatio tuotti hieman ongelmia, mutta se selvisi johtuvan vain lausekevirheestä. Nyt projektin rendedöinti ja liikkumiskomponentit ovat käytännössä 
+valmiita. 
+Projetiin käytin tällä aikavälillä noin 7h.
+Projekti on melkein valmis, pitää vain tehdä tallennuskomponentit ja muut UI elementit.
