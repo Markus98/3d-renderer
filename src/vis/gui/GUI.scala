@@ -10,6 +10,9 @@ import scala.collection.mutable.Buffer
 import vis._
 import scala.math
 import scalafx.scene.input._
+import scalafx.scene.control.Button
+import scalafx.event.ActionEvent
+import scalafx.stage.FileChooser
 
 object GUI extends JFXApp {
   var game = new Game()
@@ -41,6 +44,18 @@ object GUI extends JFXApp {
   game.stage.addWall(1, 1, Dir.East)
   game.stage.addWall(-9, 9, Dir.East)
   
+  val menuWindow = new scalafx.stage.Stage {
+    title.value = "Menu"
+    scene = new Scene(400, 600) {
+      val saveBtn = new Button("save")
+      saveBtn.onAction = (e:ActionEvent) => {
+        val chooser = new FileChooser()
+        val selectedFile = chooser.showOpenDialog(stage)
+      }
+      content = saveBtn
+    }
+  }
+  
   stage = new JFXApp.PrimaryStage {
     title.value = "3D Visualizator"
     val w = 1280
@@ -66,6 +81,10 @@ object GUI extends JFXApp {
             game.player.turnRight()
           }
           game.player.rotating = true
+        }
+        
+        if (e.code == KeyCode.ESCAPE) {
+          menuWindow.show()
         }
       }
       
@@ -127,4 +146,5 @@ object GUI extends JFXApp {
       }
     }
   }
+  
 }
