@@ -15,34 +15,7 @@ import scalafx.event.ActionEvent
 import scalafx.stage.FileChooser
 
 object GUI extends JFXApp {
-  var game = new Game()
-  game.player.rot = 0
-  game.player.pos.y = 0
-  game.player.pos.x = 0
-  
-  game.stage.addWall(0, 2, Dir.East)
-  game.stage.addWall(0, 2, Dir.West)
-  
-  game.stage.addWall(0, 3, Dir.East)
-  game.stage.addWall(0, 4, Dir.East)
-  game.stage.addWall(0, 5, Dir.East)
-  game.stage.addWall(0, 6, Dir.East)
-  game.stage.addWall(0, 7, Dir.East)
-  game.stage.addWall(0, 8, Dir.East)
-  
-  game.stage.addWall(0, 3, Dir.West)
-  game.stage.addWall(0, 4, Dir.West)
-  game.stage.addWall(0, 5, Dir.West)
-  game.stage.addWall(0, 6, Dir.West)
-  game.stage.addWall(0, 7, Dir.West)
-  game.stage.addWall(0, 8, Dir.West)
-  
-  game.stage.addWall(0, 8, Dir.North)
-  
-  
-  game.stage.addWall(1, 1, Dir.North)
-  game.stage.addWall(1, 1, Dir.East)
-  game.stage.addWall(-9, 9, Dir.East)
+  var game = vis.gen.GameGenerator.genGame(10, 10, 50)
   
   val menuWindow = new scalafx.stage.Stage {
     title.value = "Menu"
@@ -61,7 +34,7 @@ object GUI extends JFXApp {
     val w = 1280
     val h = 720
     width = w
-    height = h
+    height = h + 31
     scene = new Scene {
       fill = White
       

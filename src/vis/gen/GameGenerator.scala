@@ -6,9 +6,11 @@ import scala.util.Random
 
 object GameGenerator {
   def genGame(width: Int, height: Int, randomWalls: Int): Game = {
-    if (randomWalls > (width-1)*height + (height-1)*width || randomWalls < 0) {
+    if (width < 1 || height < 1)
+      throw new IllegalArgumentException("Width and height need to be at least 1.")
+    if (randomWalls > (width-1)*height + (height-1)*width || randomWalls < 0)
       throw new IllegalArgumentException("Invalid amount of randomWalls.")
-    }
+    
     val game = new Game()
     
     for (i <- 0 until width) {
