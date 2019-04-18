@@ -25,7 +25,7 @@ case class Entity(pos: Pos, var rot: Double = 0.0) {
   def vertexPositions = rotPositions.map( p => Pos(p.x + pos.x, p.y + pos.y, p.z + pos.z) )
 }
 
-class Wall(p: Pos, val dir: Dir) extends Entity(p) {
+class Wall(p: Pos, val dir: Dir, val x: Int, val y: Int) extends Entity(p) {
   this.rot = dir.rot
   this.verticies += (Pos(-0.5,0,0), Pos(-0.5,0, Wall.Height), Pos(0.5,0, Wall.Height), Pos(0.5,0,0))
 }
