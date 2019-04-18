@@ -15,7 +15,7 @@ import scalafx.event.ActionEvent
 import scalafx.stage.FileChooser
 
 object GUI extends JFXApp {
-  var game = vis.gen.GameGenerator.genGame(10, 10, 50)
+  var game = vis.gen.GameGenerator.genGame(5, 3, 0)
   
   val menuWindow = new scalafx.stage.Stage {
     title.value = "Menu"

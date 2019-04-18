@@ -27,10 +27,10 @@ class Stage {
   def addWall(x: Int, y: Int, dir: Dir): Boolean = {
     if (this.getWall(x, y, dir).isEmpty) {
       dir match {
-        case d @ Dir.North => horWalls((x, y + 1)) = new Wall(wallPosition(x, y, d), d)
-        case d @ Dir.East  => verWalls((x + 1, y)) = new Wall(wallPosition(x, y, d), d)
-        case d @ Dir.South => horWalls((x, y)) = new Wall(wallPosition(x, y, d), d)
-        case d @ Dir.West  => verWalls((x, y)) = new Wall(wallPosition(x, y, d), d)
+        case d @ Dir.North => horWalls((x, y + 1)) = new Wall(wallPosition(x, y, d), d, x, y)
+        case d @ Dir.East  => verWalls((x + 1, y)) = new Wall(wallPosition(x, y, d), d, x, y)
+        case d @ Dir.South => horWalls((x, y)) = new Wall(wallPosition(x, y, d), d, x, y)
+        case d @ Dir.West  => verWalls((x, y)) = new Wall(wallPosition(x, y, d), d, x, y)
       }
       true
     } else false
