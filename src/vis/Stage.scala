@@ -7,9 +7,9 @@ import scala.math
 class Stage {
   
   /**The walls that are aligned with the y-axis.*/
-  private val verWalls = Map[(Int, Int), Entity]()
+  private val verWalls = Map[(Int, Int), Wall]()
   /**The walls that are aligned with the x-axis.*/
-  private val horWalls = Map[(Int, Int), Entity]()
+  private val horWalls = Map[(Int, Int), Wall]()
   
   /**Get position in world from grid coordinates.*/
   def position(x: Int, y: Int) = Pos(Stage.SqWidth*x, Stage.SqWidth*y, 0)
@@ -22,7 +22,7 @@ class Stage {
     case Dir.West  => verWalls.get(x, y)
   }
   
-  def getWalls = (verWalls.values ++ horWalls.values).toVector
+  def getWalls: Vector[Wall] = (verWalls.values ++ horWalls.values).toVector
 
   def addWall(x: Int, y: Int, dir: Dir): Boolean = {
     if (this.getWall(x, y, dir).isEmpty) {
