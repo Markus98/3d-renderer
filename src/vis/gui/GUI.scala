@@ -1,32 +1,115 @@
 package vis.gui
 
-import scalafx.Includes._
-import scalafx.application.JFXApp
-import scalafx.scene.Scene
-import scalafx.scene.paint.Color._
-import scalafx.scene.shape.Polygon
-import scalafx.animation.AnimationTimer
+import java.io.File
+
 import scala.collection.mutable.Buffer
-import vis._
-import scala.math
-import scalafx.scene.input._
-import scalafx.scene.control.Button
+
+import scalafx.Includes.eventClosureWrapperWithParam
+import scalafx.Includes.jfxActionEvent2sfx
+import scalafx.Includes.jfxKeyEvent2sfx
+import scalafx.Includes.jfxWindowEvent2sfx
+import scalafx.Includes.observableList2ObservableBuffer
+import scalafx.animation.AnimationTimer
+import scalafx.application.JFXApp
 import scalafx.event.ActionEvent
+import scalafx.scene.Scene
+import scalafx.scene.control.Button
+import scalafx.scene.control.Label
+import scalafx.scene.control.TextField
+import scalafx.scene.input.KeyCode
+import scalafx.scene.input.KeyEvent
+import scalafx.scene.layout.GridPane
+import scalafx.scene.paint.Color.Black
+import scalafx.scene.paint.Color.White
+import scalafx.scene.paint.Color.rgb
+import scalafx.scene.shape.Polygon
 import scalafx.stage.FileChooser
+import scalafx.stage.FileChooser.ExtensionFilter
+import scalafx.stage.Modality
+import scalafx.stage.WindowEvent
+import scalafx.stage.Stage
+
+import vis.{Entity, Player, Pos}
+import vis.gen.GameGenerator
 
 object GUI extends JFXApp {
-  var game = vis.gen.GameGenerator.genGame(5, 3, 0)
+  var game = GameGenerator.genGame(10,10,12)
   
-  val menuWindow = new scalafx.stage.Stage {
+  // define stuff for handling saving
+  val saveDirectory = new File("./saves")
+  if (!saveDirectory.exists())
+    saveDirectory.mkdirs()
+  val extensionFilter = new ExtensionFilter("Stage files", "*.stge")
+  
+  /**A window that opens when ESC is pressed. Contains save, load and stage generation.*/
+  val menuWindow: Stage = new Stage {
     title.value = "Menu"
-    scene = new Scene(400, 600) {
-      val saveBtn = new Button("save")
+    resizable = false
+    scene = new Scene(300, 150) {
+      
+      onKeyPressed = (e: KeyEvent) => if (e.code == KeyCode.ESCAPE) menuWindow.close()
+      onShown = (e: WindowEvent) => errorField.text = ""
+          
+      val saveBtn = new Button("Save stage...")
       saveBtn.onAction = (e:ActionEvent) => {
-        val chooser = new FileChooser()
-        val selectedFile = chooser.showOpenDialog(stage)
+        val chooser = new FileChooser {
+          title = "Save Stage File"
+          initialFileName = "stage.stge"
+          initialDirectory = saveDirectory
+          extensionFilters += extensionFilter
+        }
+        val selectedFile = chooser.showSaveDialog(menuWindow)
+        if (selectedFile != null) {
+          GameGenerator.saveGame(game, selectedFile)
+          errorField.text = " Stage saved."
+        }
       }
-      content = saveBtn
+      
+      val loadBtn = new Button("Load stage...")
+      loadBtn.onAction = (e:ActionEvent) => {
+        val chooser = new FileChooser {
+          title = "Load Stage File"
+          initialDirectory = saveDirectory
+          extensionFilters += extensionFilter
+        }
+        val selectedFile = chooser.showOpenDialog(menuWindow)
+        if (selectedFile != null) {
+          game = GameGenerator.loadGame(selectedFile)
+          menuWindow.close() 
+        }
+      }
+      
+      val widthField = new TextField {text = "10"}
+      val heightField = new TextField {text = "10"}
+      val randomAmountField = new TextField {text = "0"}
+      val errorField = new Label
+      
+      val generateBtn = new Button("Generate Stage")
+      generateBtn.onAction = (e:ActionEvent) => {
+        try {
+          game = GameGenerator.genGame(widthField.text.value.toInt, heightField.text.value.toInt, randomAmountField.text.value.toInt)
+          errorField.text = ""
+        } catch {
+          case e : Throwable => errorField.text = " Invalid parameters."
+        }
+      }
+      
+      val grid = new GridPane()
+      grid.add(saveBtn, 0, 0)
+      grid.add(loadBtn, 0, 1)
+      grid.add(new Label("Width: "), 0, 3)
+      grid.add(widthField, 1, 3)
+      grid.add(new Label("Height: "), 0, 4)
+      grid.add(heightField, 1, 4)
+      grid.add(new Label("Random walls: "), 0, 5)
+      grid.add(randomAmountField, 1, 5)
+      grid.add(generateBtn, 0, 6)
+      grid.add(errorField, 1, 6)
+      
+      content = grid
     }
+    initOwner(stage)
+    initModality(Modality.APPLICATION_MODAL)
   }
   
   stage = new JFXApp.PrimaryStage {
@@ -35,6 +118,8 @@ object GUI extends JFXApp {
     val h = 720
     width = w
     height = h + 31
+    resizable = false
+    
     scene = new Scene {
       fill = White
       
@@ -62,6 +147,7 @@ object GUI extends JFXApp {
       }
       
       var prevTime: Long = 0
+      /**An animation timer that handles updating the frames.*/
       val timer = AnimationTimer(t => {
         val deltaTime = (t - prevTime)/1000000000.0
         prevTime = t
@@ -71,6 +157,7 @@ object GUI extends JFXApp {
       timer.start
     }
     
+    /**Returns a drawn polygon for an entity, given the current situation in Game object.*/
     def drawEntity(ent: Entity): Polygon = {
       val rel = game.getRelEntity(ent)
       val drawPoints = Buffer[java.lang.Double]()
@@ -119,5 +206,4 @@ object GUI extends JFXApp {
       }
     }
   }
-  
 }
