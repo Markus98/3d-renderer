@@ -34,7 +34,6 @@ object GUI extends JFXApp {
   /**A window that opens when ESC is pressed. Contains save, load and stage generation.*/
   val menuWindow: Stage = new Stage {
     title.value = "Menu"
-    resizable = false
     scene = new Scene(300, 150) {
       
       onKeyPressed = (e: KeyEvent) => if (e.code == KeyCode.ESCAPE) menuWindow.close()
