@@ -1,9 +1,17 @@
 package vis.gen
 
-import vis._
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
+import java.io.IOException
+import java.io.Reader
+
 import scala.collection.mutable.Buffer
 import scala.util.Random
-import java.io._
+
+import vis.Dir
+import vis.Game
 
 object GameGenerator {
   /**Generates a game with a rectangle stage and random walls inside it specified by randomWalls.*/
@@ -36,8 +44,8 @@ object GameGenerator {
     game
   }
   
+  /**Saves the current Game's Stage to a file.*/
   def saveGame(game: Game, file: File) {
-    println(file.createNewFile())
     val writer = new FileWriter(file)
     val bufWriter = new BufferedWriter(writer)
     
@@ -62,19 +70,48 @@ object GameGenerator {
     writer.close()
   }
   
-  
-  private def readFully(result: Array[Char], input: Reader) = {
-      var cursor = 0
-
-      while (cursor != result.length) {
-        var numCharactersRead = input.read(result, cursor, result.length - cursor)
-
-        if (numCharactersRead == -1) {
-          throw new IOException("Unexpected end of file.")
-        }
-
-        cursor += numCharactersRead
+  /**Loads a Game's Stage and returns it as a Game object.*/
+  def loadGame(file: File): Game = {
+    val game = new Game()
+    val reader = new FileReader(file)
+    
+    var readChar = reader.read()
+    while (readChar != -1) {
+      val dir = readChar.toChar match {
+        case 'N' => Dir.North
+        case 'E' => Dir.East
+        case 'S' => Dir.South
+        case 'W' => Dir.West
+        case char => throw new CorruptedGameFileExeption(s"Wrong direction prefix '$char'.")
       }
-
+      val coords = try {
+        readCoordinates(reader)
+      } catch {
+        case e: NumberFormatException => 
+          throw new CorruptedGameFileExeption("Error reading coordinates.")
+      }
+      game.stage.addWall(coords._1, coords._2, dir)
+      readChar = coords._3
     }
+    reader.close()
+    game
+  }
+  
+  private def readCoordinates(reader: Reader): (Int, Int, Int) = {
+    var nextPrefix = 0
+    def readNumber(): Int = {
+      val buffer = Buffer[Char]()
+      var readChar = reader.read()
+      while (readChar != -1 && readChar.toChar.isDigit) {
+        buffer.append(readChar.toChar)
+        readChar = reader.read()
+      }
+      if (readChar != ',') nextPrefix = readChar
+      buffer.mkString.toInt
+    }
+    // (x, y, nextPrefix)
+    (readNumber(),readNumber(), nextPrefix)
+  }
 }
+
+class CorruptedGameFileExeption(desc: String) extends IOException(desc)
