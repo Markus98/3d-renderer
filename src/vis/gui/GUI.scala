@@ -1,40 +1,26 @@
 package vis.gui
 
 import java.io.File
-
 import scala.collection.mutable.Buffer
 
-import scalafx.Includes.eventClosureWrapperWithParam
-import scalafx.Includes.jfxActionEvent2sfx
-import scalafx.Includes.jfxKeyEvent2sfx
-import scalafx.Includes.jfxWindowEvent2sfx
-import scalafx.Includes.observableList2ObservableBuffer
+import scalafx.Includes.{eventClosureWrapperWithParam, jfxActionEvent2sfx, jfxKeyEvent2sfx, jfxWindowEvent2sfx, observableList2ObservableBuffer}
 import scalafx.animation.AnimationTimer
 import scalafx.application.JFXApp
 import scalafx.event.ActionEvent
 import scalafx.scene.Scene
-import scalafx.scene.control.Button
-import scalafx.scene.control.Label
-import scalafx.scene.control.TextField
-import scalafx.scene.input.KeyCode
-import scalafx.scene.input.KeyEvent
+import scalafx.scene.control.{Button, Label, TextField}
+import scalafx.scene.input.{KeyCode, KeyEvent}
 import scalafx.scene.layout.GridPane
-import scalafx.scene.paint.Color.Black
-import scalafx.scene.paint.Color.White
-import scalafx.scene.paint.Color.rgb
+import scalafx.scene.paint.Color.{Black, White, rgb}
 import scalafx.scene.shape.Polygon
 import scalafx.stage.FileChooser
 import scalafx.stage.FileChooser.ExtensionFilter
-import scalafx.stage.Modality
-import scalafx.stage.WindowEvent
-import scalafx.stage.Stage
+import scalafx.stage.{Modality, WindowEvent, Stage}
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control.Alert
 
 import vis.{Entity, Player, Pos}
-import vis.gen.GameGenerator
-import vis.gen.CorruptedGameFileExeption
-import vis.gen.CorruptedGameFileExeption
+import vis.gen._
 
 object GUI extends JFXApp {
   var game = GameGenerator.genGame(10,10,12)
