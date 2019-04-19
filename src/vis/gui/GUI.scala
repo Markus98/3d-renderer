@@ -28,9 +28,13 @@ import scalafx.stage.FileChooser.ExtensionFilter
 import scalafx.stage.Modality
 import scalafx.stage.WindowEvent
 import scalafx.stage.Stage
+import scalafx.scene.control.Alert.AlertType
+import scalafx.scene.control.Alert
 
 import vis.{Entity, Player, Pos}
 import vis.gen.GameGenerator
+import vis.gen.CorruptedGameFileExeption
+import vis.gen.CorruptedGameFileExeption
 
 object GUI extends JFXApp {
   var game = GameGenerator.genGame(10,10,12)
@@ -61,7 +65,7 @@ object GUI extends JFXApp {
         val selectedFile = chooser.showSaveDialog(menuWindow)
         if (selectedFile != null) {
           GameGenerator.saveGame(game, selectedFile)
-          errorField.text = " Stage saved."
+          new Alert(AlertType.Information, "Game saved successfully.").showAndWait()
         }
       }
       
@@ -74,8 +78,13 @@ object GUI extends JFXApp {
         }
         val selectedFile = chooser.showOpenDialog(menuWindow)
         if (selectedFile != null) {
-          game = GameGenerator.loadGame(selectedFile)
-          menuWindow.close() 
+          try {
+            game = GameGenerator.loadGame(selectedFile)
+            menuWindow.close() 
+          } catch {
+            case e: CorruptedGameFileExeption =>
+              new Alert(AlertType.Error, "Corrupted game file.").showAndWait()
+          }
         }
       }
       
