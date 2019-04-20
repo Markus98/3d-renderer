@@ -5,7 +5,6 @@ import scala.collection.mutable.Buffer
 class Game {
   val stage = new Stage()
   val player = new Player(stage)
-  val entities = Buffer[Entity]()
   
   /**Returns a new instance of a given entity whose position and rotation have been made
    * relative to the player's position and rotation.*/
