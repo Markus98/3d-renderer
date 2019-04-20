@@ -33,6 +33,13 @@ class Player(val stage: Stage) {
   def turnLeft() = dir = dir.antiClockwise
   def turnRight() = dir = dir.clockwise
   
+  def toggleWall() = {
+    if (stage.getWall(gridX, gridY, dir).isDefined)
+      stage.removeWall(gridX, gridY, dir)
+    else
+      stage.addWall(gridX, gridY, dir)
+  }
+  
   /**Rotates a small amount towards desired direction according to deltaTime*/
   def rotateTowardsDesired(deltaTime: Double) = {
     val normRot = rot % (2*math.Pi)

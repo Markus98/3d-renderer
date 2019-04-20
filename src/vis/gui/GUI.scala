@@ -134,7 +134,9 @@ object GUI extends JFXApp {
           }
           game.player.rotating = true
         }
-        
+        if (e.code == KeyCode.SPACE) {
+          game.player.toggleWall()
+        }
         if (e.code == KeyCode.ESCAPE) {
           menuWindow.show()
         }

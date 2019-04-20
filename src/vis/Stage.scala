@@ -32,9 +32,10 @@ class Stage {
   
   def removeWall(x: Int, y: Int, dir: Dir): Boolean = {
     if (this.getWall(x, y, dir).isDefined) {
-      
-    }
-    true
+      val container = getWallContainer(x, y, dir)
+      container._3.remove(container._1 -> container._2)
+      true
+    } else false 
   }
   
   private def getWallContainer(x: Int, y: Int, dir: Dir): (Int, Int, Map[(Int, Int), Wall]) = {
