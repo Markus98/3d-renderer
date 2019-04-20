@@ -183,9 +183,8 @@ object GUI extends JFXApp {
       
       
       def calcPixel(p: Pos) = {
-        val yDist = if (p.y <= Player.MinView) Player.MinView + 0.01 else p.y 
-        val x = w/2.0 + (p.x/yDist*Player.MinView) * Player.PixelMultiplier
-        val y = h/2.0 + ((Player.Height - p.z)/yDist*Player.MinView) * Player.PixelMultiplier
+        val x = w/2.0 + (p.x/p.y*Player.MinView) * Player.PixelMultiplier
+        val y = h/2.0 + ((Player.Height - p.z)/p.y*Player.MinView) * Player.PixelMultiplier
         (x,y)
       }
       
