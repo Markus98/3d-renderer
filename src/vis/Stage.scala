@@ -50,7 +50,7 @@ class Stage {
 }
 
 object Stage {
-  val SqWidth: Double = 1 // The width of a single square.
+  val SqWidth: Double = 1.0 // The width of a single square.
 }
 
 sealed abstract class Dir (val xMul: Int, val yMul: Int, val rot: Double) {

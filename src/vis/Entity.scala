@@ -27,7 +27,8 @@ case class Entity(pos: Pos, var rot: Double = 0.0) {
 
 class Wall(p: Pos, val dir: Dir, val x: Int, val y: Int) extends Entity(p) {
   this.rot = dir.rot
-  this.verticies += (Pos(-0.5,0,0), Pos(-0.5,0, Wall.Height), Pos(0.5,0, Wall.Height), Pos(0.5,0,0))
+  import vis.Stage.SqWidth
+  this.verticies += (Pos(-0.5*SqWidth,0,0), Pos(-0.5*SqWidth,0, Wall.Height), Pos(0.5*SqWidth,0, Wall.Height), Pos(0.5*SqWidth,0,0))
 }
 
 object Wall {
