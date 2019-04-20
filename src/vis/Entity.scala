@@ -13,7 +13,7 @@ case class Entity(pos: Pos, var rot: Double = 0.0) {
   private var rotatedPoints = this.verticies
   
   /** Returns the verticies of the entity with the rotation applied.*/
-  def rotPositions = {
+  private def rotPositions = {
     if (rot != previousRot) {
       rotatedPoints = verticies.map(_.rotated(rot))
       previousRot = rot
