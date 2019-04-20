@@ -38,6 +38,7 @@ class Stage {
     } else false 
   }
   
+  /**A helper method to find out where in the two Map variables a certain wall is located.*/
   private def getWallContainer(x: Int, y: Int, dir: Dir): (Int, Int, Map[(Int, Int), Wall]) = {
     dir match {
       case d @ Dir.North => (x, y + 1, horWalls)
