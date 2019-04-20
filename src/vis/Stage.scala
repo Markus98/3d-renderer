@@ -15,25 +15,35 @@ class Stage {
   def position(x: Int, y: Int) = Pos(Stage.SqWidth*x, Stage.SqWidth*y, 0)
   def wallPosition(x: Int, y: Int, dir: Dir) = Pos(Stage.SqWidth*(x + 0.5*dir.xMul), Stage.SqWidth*(y + 0.5*dir.yMul), 0)
   
-  def getWall(x: Int, y: Int, dir: Dir) = dir match {
-    case Dir.North => horWalls.get(x, y + 1)
-    case Dir.East  => verWalls.get(x + 1, y)
-    case Dir.South => horWalls.get(x, y)
-    case Dir.West  => verWalls.get(x, y)
+  def getWall(x: Int, y: Int, dir: Dir) = {
+    val container = getWallContainer(x, y, dir)
+    container._3.get(container._1, container._2)
   }
   
   def getWalls: Vector[Wall] = (verWalls.values ++ horWalls.values).toVector
-
+  
   def addWall(x: Int, y: Int, dir: Dir): Boolean = {
     if (this.getWall(x, y, dir).isEmpty) {
-      dir match {
-        case d @ Dir.North => horWalls((x, y + 1)) = new Wall(wallPosition(x, y, d), d, x, y)
-        case d @ Dir.East  => verWalls((x + 1, y)) = new Wall(wallPosition(x, y, d), d, x, y)
-        case d @ Dir.South => horWalls((x, y)) = new Wall(wallPosition(x, y, d), d, x, y)
-        case d @ Dir.West  => verWalls((x, y)) = new Wall(wallPosition(x, y, d), d, x, y)
-      }
+      val container = getWallContainer(x, y, dir)
+      container._3(container._1 -> container._2) = new Wall(wallPosition(x, y, dir), dir, x, y)
       true
     } else false
+  }
+  
+  def removeWall(x: Int, y: Int, dir: Dir): Boolean = {
+    if (this.getWall(x, y, dir).isDefined) {
+      
+    }
+    true
+  }
+  
+  private def getWallContainer(x: Int, y: Int, dir: Dir): (Int, Int, Map[(Int, Int), Wall]) = {
+    dir match {
+      case d @ Dir.North => (x, y + 1, horWalls)
+      case d @ Dir.East  => (x + 1, y, verWalls)
+      case d @ Dir.South => (x, y, horWalls)
+      case d @ Dir.West  => (x, y, verWalls)
+    }
   }
 }
 
